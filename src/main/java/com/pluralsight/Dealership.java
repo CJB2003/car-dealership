@@ -41,7 +41,7 @@ public class Dealership {
         return makeModel;
     }
     //Method for finding vehicles by year with a range
-    public ArrayList<Vehicle> getVehiclesByYear(int max, int min) {
+    public ArrayList<Vehicle> getVehiclesByYear(int min, int max) {
 
         ArrayList<Vehicle> year = new ArrayList<>();
         for (Vehicle vehicle : this.inventory) {

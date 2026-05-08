@@ -1,7 +1,5 @@
 package com.pluralsight;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 
 public class DealershipFileManager {
 
@@ -50,6 +48,8 @@ public class DealershipFileManager {
                 dealership.addVehicle(vehicle);
             }
 
+            bReader.close();
+
         } catch(Exception e){
             System.out.println("Couldn't parse inventory file.");
         }
@@ -57,7 +57,17 @@ public class DealershipFileManager {
     }
 
     public void saveDealership(Dealership dealership) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))) {
+            //Writing header
+            bw.write(String.format("%s|%s|%s%n", dealership.getName(), dealership.getAddress(), dealership.getPhone()));
 
+            //Gets all vehicles and writes them into csv file
+            for (Vehicle v : dealership.getAllVehicles()) {
+                bw.write(String.format("%d|%d|%s|%s|%s|%s|%d|%.2f%n", v.getVin(), v.getYear(), v.getMake(),
+                        v.getModel(), v.getVehicleType(), v.getColor(), v.getOdometer(), v.getPrice()));
+            }
+        } catch (Exception e) {
+            System.out.println("Could not write into file.");;
     }
 
 }
