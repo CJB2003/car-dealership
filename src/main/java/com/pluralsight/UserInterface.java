@@ -62,7 +62,7 @@ public class UserInterface {
     ///Display vehicles in a nice format
     private void displayVehicles(ArrayList<Vehicle> vehicles) {
         if (vehicles == null || vehicles.isEmpty()) {
-            System.out.println("No vehicles found.");
+            System.out.println("\nNo vehicles found.");
             return;
         }
         System.out.println();
@@ -78,7 +78,7 @@ public class UserInterface {
 
     ///Prompt user for min and max price to find vehicles within price range
     private void processGetByPriceRequest() {
-        System.out.print("Enter a minimum price: ");
+        System.out.print("\nEnter a minimum price: ");
         double minPrice = Double.parseDouble(myScanner.nextLine());
         System.out.print("Enter a maximum price: ");
         double maxPrice = Double.parseDouble(myScanner.nextLine());
@@ -88,7 +88,7 @@ public class UserInterface {
     }
     ///Prompt user for make and model of car
     private void processGetByMakeModelRequest() {
-        System.out.print("Enter the vehicle make: ");
+        System.out.print("\nEnter the vehicle make: ");
         String userMake = myScanner.nextLine();
         System.out.print("Enter the vehicle userModel: ");
         String userModel = myScanner.nextLine();
@@ -98,7 +98,7 @@ public class UserInterface {
     }
     ///Prompt user for min year and max year
     private void processGetByYearRequest() {
-        System.out.print("Enter minimum vehicle year: ");
+        System.out.print("\nEnter minimum vehicle year: ");
         int minYear = Integer.parseInt(myScanner.nextLine());
         System.out.print("Enter maximum vehicle year: ");
         int maxYear = Integer.parseInt(myScanner.nextLine());
@@ -108,7 +108,7 @@ public class UserInterface {
     }
     ///Prompt user for car color
     private void processGetByColorRequest() {
-        System.out.print("Enter a vehicle color: ");
+        System.out.print("\nEnter a vehicle color: ");
         String userColor = myScanner.nextLine();
 
         ArrayList<Vehicle> vColor = dealership.getVehiclesByColor(userColor);
@@ -116,7 +116,7 @@ public class UserInterface {
     }
     ///Prompt user for min miles and max miles
     private void processGetByMileageRequest() {
-        System.out.print("Enter minimum mileage: ");
+        System.out.print("\nEnter minimum mileage: ");
         int minMiles = Integer.parseInt(myScanner.nextLine());
         System.out.print("Enter maximum mileage: ");
         int maxMiles = Integer.parseInt(myScanner.nextLine());
@@ -126,7 +126,7 @@ public class UserInterface {
     }
     ///Prompt user for vehicle type
     private void processGetByVehicleTypeRequest() {
-        System.out.print("Enter a vehicle type: ");
+        System.out.print("\nEnter a vehicle type: ");
         String userVType = myScanner.nextLine();
 
         ArrayList<Vehicle> vType = dealership.getVehiclesByType(userVType);
@@ -140,7 +140,7 @@ public class UserInterface {
     ///Prompts user for all necessary values to add a vehicle, adds data to inventory array, saving it to file
     private void processAddVehicleRequest() {
 
-        System.out.print("Enter a VIN number: ");
+        System.out.print("\nEnter a VIN number: ");
         int vin = Integer.parseInt(myScanner.nextLine());
 
         System.out.print("Enter a year: ");
@@ -171,7 +171,7 @@ public class UserInterface {
         DealershipFileManager dealershipFileManager = new DealershipFileManager();
         dealershipFileManager.saveDealership(dealership);
 
-        System.out.println("Vehicle has been added successfully!");
+        System.out.println("Vehicle has been added successfully!\n");
     }
     ///Prompts user for VIN, Checks by VIN if vehicle exists in inventory, if so asks for confirmation before removing
     private void processRemoveVehicleRequest() {
@@ -188,19 +188,19 @@ public class UserInterface {
             }
 
             if (removeVehicle == null) {
-                System.out.println("Vehicle VIN " + userVin + " could not be found within inventory. Try again");
+                System.out.println("\nVehicle VIN " + userVin + " could not be found within inventory. Try again");
                 continue;
             }
 
-            System.out.println("Vehicle has been found!");
-            System.out.printf("%-5d | %-4d | %-6s | %-10s | %-12s | %-8s | %-8d | %.2f%n", removeVehicle.getVin(), removeVehicle.getYear(), removeVehicle.getMake(),
+            System.out.println("Vehicle has been found!\n");
+            System.out.printf("%d | %d | %s | %s | %s | %s | %d | %.2f%n\n", removeVehicle.getVin(), removeVehicle.getYear(), removeVehicle.getMake(),
                     removeVehicle.getModel(), removeVehicle.getVehicleType(), removeVehicle.getColor(), removeVehicle.getOdometer(), removeVehicle.getPrice());
 
             System.out.print("Confirm (Y/N): ");
             String userConfirm = myScanner.nextLine();
 
             if (!userConfirm.equalsIgnoreCase("y")) {
-                System.out.println("Vehicle removal has been cancelled.");
+                System.out.println("Vehicle removal has been cancelled.\n");
                 return;
             }
 
@@ -209,7 +209,7 @@ public class UserInterface {
             DealershipFileManager dealershipFileManager = new DealershipFileManager();
             dealershipFileManager.saveDealership(dealership);
 
-            System.out.println("Vehicle has been removed successfully!");
+            System.out.println("Vehicle has been removed successfully!\n");
             break;
         }
     }
