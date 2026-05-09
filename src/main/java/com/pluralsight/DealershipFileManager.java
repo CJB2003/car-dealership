@@ -16,7 +16,7 @@ public class DealershipFileManager {
             String line;
 
             //Reading the header first and parsing
-            if((line = bReader.readLine()) != null) {
+            if ((line = bReader.readLine()) != null) {
 
                 String[] headerParts = line.split("\\|");
                 String name = headerParts[0];
@@ -28,7 +28,7 @@ public class DealershipFileManager {
 
             String vehicleInfo;
             //Parsing vehicle information
-            while((vehicleInfo = bReader.readLine()) != null) {
+            while ((vehicleInfo = bReader.readLine()) != null) {
 
                 String[] vehicleParts = vehicleInfo.split("\\|");
 
@@ -50,24 +50,25 @@ public class DealershipFileManager {
 
             bReader.close();
 
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Couldn't parse inventory file.");
         }
         return dealership;
     }
 
     public void saveDealership(Dealership dealership) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
             //Writing header
-            bw.write(String.format("%s|%s|%s%n", dealership.getName(), dealership.getAddress(), dealership.getPhone()));
+            writer.write(String.format("%s|%s|%s%n", dealership.getName(), dealership.getAddress(), dealership.getPhone()));
 
             //Gets all vehicles and writes them into csv file
             for (Vehicle v : dealership.getAllVehicles()) {
-                bw.write(String.format("%d|%d|%s|%s|%s|%s|%d|%.2f%n", v.getVin(), v.getYear(), v.getMake(),
+                writer.write(String.format("%d|%d|%s|%s|%s|%s|%d|%.2f%n", v.getVin(), v.getYear(), v.getMake(),
                         v.getModel(), v.getVehicleType(), v.getColor(), v.getOdometer(), v.getPrice()));
             }
         } catch (Exception e) {
-            System.out.println("Could not write into file.");;
+            System.out.println("Could not save to file.");
+        }
     }
-
 }

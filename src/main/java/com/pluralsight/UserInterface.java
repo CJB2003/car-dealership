@@ -19,7 +19,7 @@ public class UserInterface {
         this.dealership = fileManager.getDealership();
     }
 
-    //Display method
+    //Menu display for user experience
     public void display() {
         this.init();
 
@@ -40,6 +40,7 @@ public class UserInterface {
                     0) EXIT
                     """
             );
+            System.out.print("Selection: ");
             int userCommand = Integer.parseInt(myScanner.nextLine());
 
             switch(userCommand) {
@@ -58,18 +59,32 @@ public class UserInterface {
         }
     }
 
-    private void displayVehicles(ArrayList<Vehicles> vehicles) {
+    //Display vehicles in a nice format
+    private void displayVehicles(ArrayList<Vehicle> vehicles) {
         if (vehicles == null || vehicles.isEmpty()) {
             System.out.println("No vehicles found.");
             return;
         }
+        System.out.println();
+        System.out.printf("%-5s | %-4s | %-6s | %-10s | %-6s | %-8s | %-8s | %s%n", "VIN", "YEAR", "MAKE", "MODEL", "VEHICLE-TYPE", "COLOR", "ODOMETER", "PRICE");
+        System.out.println("-".repeat(82));
 
-        System.out.printf("%-6s | %-5s | %-10s | %-10s | %-6s | %-8s | %-8s | %s%n", );
-
+        for (Vehicle vehicle : vehicles) {
+            System.out.printf("%-5s | %-4s | %-6s | %-10s | %-12s | %-8s | %-8s | %.2f%n", vehicle.getVin(), vehicle.getYear(),
+                    vehicle.getMake(), vehicle.getModel(), vehicle.getVehicleType(), vehicle.getColor(), vehicle.getOdometer(), vehicle.getPrice());
+        }
+        System.out.println();
     }
 
+    //Prompt user for min and max price to find vehicles within price range
     private void processGetByPriceRequest() {
+        System.out.print("Enter a minimum price: ");
+        double minPrice = myScanner.nextDouble();
+        System.out.println("Enter a maximum price: ");
+        double maxPrice = myScanner.nextDouble();
 
+        ArrayList<Vehicle> vehiclePrice = dealership.getVehiclesByPrice(minPrice, maxPrice);
+        displayVehicles(vehiclePrice);
     }
     private void processGetByMakeModelRequest() {
 
@@ -87,7 +102,8 @@ public class UserInterface {
 
     }
     private void processGetAllVehiclesRequest() {
-
+        ArrayList<Vehicle> getAllV = dealership.getAllVehicles();
+        displayVehicles(getAllV);
     }
     private void processAddVehicleRequest() {
 

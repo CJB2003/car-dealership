@@ -66,12 +66,27 @@ public class Dealership {
 
     //Method for finding vehicles by mileage
     public ArrayList<Vehicle> getVehiclesByMileage(int min, int max) {
-        return null;
+
+        ArrayList<Vehicle> vMile = new ArrayList<>();
+        for (Vehicle vehicle : this.inventory) {
+            if (vehicle.getOdometer() >= min && vehicle.getOdometer() <= max){
+                vMile.add(vehicle);
+            }
+        }
+
+        return vMile;
     }
 
     //Method for finding vehicles by type
     public ArrayList<Vehicle> getVehiclesByType(String vehicleType) {
-        return null;
+
+        ArrayList<Vehicle> vType = new ArrayList<>();
+        for (Vehicle vehicle : this.inventory) {
+            if (vehicle.getVehicleType().equalsIgnoreCase(vehicleType)) {
+                vType.add(vehicle);
+            }
+        }
+        return vType;
     }
 
     //Returns all vehicles in array list
@@ -86,7 +101,7 @@ public class Dealership {
 
     //Method for removing vehicles
     public void removeVehicle(Vehicle vehicle) {
-
+        inventory.remove(vehicle);
     }
 
     public String getName() {
