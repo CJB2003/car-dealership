@@ -1,7 +1,6 @@
 package com.pluralsight;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Dealership {
 
@@ -14,10 +13,10 @@ public class Dealership {
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.inventory = new ArrayList<Vehicle>();
+        this.inventory = new ArrayList<>();
     }
 
-    //Method for finding vehicles by a price range
+    ///Method for finding vehicles by a price range
     public ArrayList<Vehicle> getVehiclesByPrice(double min, double max) {
 
         ArrayList<Vehicle> vPrice = new ArrayList<>();
@@ -29,7 +28,7 @@ public class Dealership {
         return vPrice;
     }
 
-    //Method for finding vehicles by make and model, takes in make and model and compares through array list
+    ///Method for finding vehicles by make and model, takes in make and model and compares through array list
     public ArrayList<Vehicle> getVehiclesByMakeModel(String make, String model) {
 
         ArrayList<Vehicle> makeModel = new ArrayList<>();
@@ -40,7 +39,8 @@ public class Dealership {
         }
         return makeModel;
     }
-    //Method for finding vehicles by year with a range
+
+    ///Method for finding vehicles by year with a range
     public ArrayList<Vehicle> getVehiclesByYear(int min, int max) {
 
         ArrayList<Vehicle> year = new ArrayList<>();
@@ -52,7 +52,7 @@ public class Dealership {
         return year;
     }
 
-    //Method for finding vehicles by color
+    ///Method for finding vehicles by color
     public ArrayList<Vehicle> getVehiclesByColor(String color) {
 
         ArrayList<Vehicle> vColor = new ArrayList<>();
@@ -64,7 +64,7 @@ public class Dealership {
         return vColor;
     }
 
-    //Method for finding vehicles by mileage
+    ///Method for finding vehicles by mileage
     public ArrayList<Vehicle> getVehiclesByMileage(int min, int max) {
 
         ArrayList<Vehicle> vMile = new ArrayList<>();
@@ -77,7 +77,7 @@ public class Dealership {
         return vMile;
     }
 
-    //Method for finding vehicles by type
+    ///Method for finding vehicles by type
     public ArrayList<Vehicle> getVehiclesByType(String vehicleType) {
 
         ArrayList<Vehicle> vType = new ArrayList<>();
@@ -89,17 +89,17 @@ public class Dealership {
         return vType;
     }
 
-    //Returns all vehicles in array list
+    ///Returns all vehicles in array list
     public ArrayList<Vehicle> getAllVehicles() {
         return this.inventory;
     }
 
-    //Method for adding vehicles
+    ///Method for adding vehicles
     public void addVehicle(Vehicle vehicle) {
         inventory.add(vehicle);
     }
 
-    //Method for removing vehicles
+    ///Method for removing vehicles
     public void removeVehicle(Vehicle vehicle) {
         inventory.remove(vehicle);
     }
