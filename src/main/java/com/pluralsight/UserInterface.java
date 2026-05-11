@@ -53,7 +53,7 @@ public class UserInterface {
                     userCommand = Integer.parseInt(userInput);
                     isValid = true;
                 } catch (NumberFormatException e) {
-                    System.out.println("You did not select a number. Try again!");
+                    System.out.println("\nYou did not select a number. Try again!\n");
                 }
             }
 
