@@ -40,8 +40,22 @@ public class UserInterface {
                     0) EXIT
                     """
             );
-            System.out.print("Selection: ");
-            int userCommand = Integer.parseInt(myScanner.nextLine());
+
+            int userCommand = 0;
+            boolean isValid = false;
+
+            //Validation while loop to check whether the user input was a number or not.
+            while (!isValid) {
+                System.out.print("Selection: ");
+                String userInput = myScanner.nextLine();
+
+                try {
+                    userCommand = Integer.parseInt(userInput);
+                    isValid = true;
+                } catch (NumberFormatException e) {
+                    System.out.println("You did not select a number. Try again!");
+                }
+            }
 
             switch(userCommand) {
                 case 1 -> processGetByPriceRequest();
