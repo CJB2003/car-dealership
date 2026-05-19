@@ -5,8 +5,9 @@ public class LeaseContract extends Contract{
     private double expectedEndingValue;
     private double leaseFee;
 
-    public LeaseContract(String date, String customerName, String customerEmail, String vehicleSold, double expectedEndingValue, double leaseFee) {
+    public LeaseContract(String date, String customerName, String customerEmail, String vehicleSold) {
         super(date, customerName, customerEmail, vehicleSold);
+
         this.vehiclePrice = getVehiclePrice();
         this.expectedEndingValue = this.vehiclePrice * 0.5;
         this.leaseFee = this.vehiclePrice * 0.07;
@@ -15,6 +16,7 @@ public class LeaseContract extends Contract{
     /// All leases are financed at 4.0% for 36 months, returns monthly formula
     @Override
     public double getMonthlyPay() {
+
         double monthlyRate = 0.04 / 12;
         int numberOfPayments = 36;
 

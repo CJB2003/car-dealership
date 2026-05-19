@@ -201,6 +201,7 @@ public class UserInterface {
             for (Vehicle vehicle : dealership.getAllVehicles()) {
                 if (vehicle.getVin() == userVin) {
                     removeVehicle = vehicle;
+                    break;
                 }
             }
 
@@ -231,6 +232,7 @@ public class UserInterface {
         }
     }
 
+    /// Using the same while loop structure so user can retry if needed
     public void processSellLeaseVehicleRequest() {
         System.out.print("Enter the VIN number of the vehicle: ");
         int vin = Integer.parseInt(myScanner.nextLine());
@@ -240,6 +242,7 @@ public class UserInterface {
             for (Vehicle vehicle : dealership.getAllVehicles()) {
                 if (vehicle.getVin() == vin) {
                     sellLeaseV = vehicle;
+                    break;
                 }
             }
 
@@ -255,30 +258,68 @@ public class UserInterface {
             System.out.println("Is this the correct vehicle? (Y/N)");
             String userChoice = myScanner.nextLine();
 
-            if (userChoice.equalsIgnoreCase("y")) {
-                String date = String.valueOf(LocalDate.now());
+            if (!userChoice.equalsIgnoreCase("y")) {
+                System.out.println("Your transaction has been cancelled.");
+                return;
+            }
 
-                System.out.print("Please enter your name: ");
-                String userName = myScanner.nextLine();
+            String date = String.valueOf(LocalDate.now());
 
-                System.out.print("Please enter your email: ");
-                String userEmail = myScanner.nextLine();
+            System.out.print("Please enter your name: ");
+            String userName = myScanner.nextLine();
 
-                System.out.print("Will this be a sale or lease?");
-                String userSaleLease = myScanner.nextLine().toUpperCase();
+            System.out.print("Please enter your email: ");
+            String userEmail = myScanner.nextLine();
 
-                Contract contract = null;
+            String vehicleSold = String.format("\n%d|%d|%s|%s|%s|%s|%d|%.2f",
+                    sellLeaseV.getVin(), sellLeaseV.getYear(), sellLeaseV.getMake(), sellLeaseV.getModel(),
+                    sellLeaseV.getVehicleType(), sellLeaseV.getColor(), sellLeaseV.getOdometer(), sellLeaseV.getPrice());
 
-                if (userSaleLease.equalsIgnoreCase("Sale")) {
-                    System.out.print("Would you like to finance? (Y/N): ");
-                    boolean finance = myScanner.nextLine().equalsIgnoreCase("y");
+            System.out.print("\nWill this be a sale or lease?\n");
+            String userSaleLease = myScanner.nextLine().toUpperCase();
 
+            Contract contract = null;
 
+            if (userSaleLease.equalsIgnoreCase("Sale")) {
+                System.out.print("Would you like to finance? (Y/N): ");
+                boolean finance = myScanner.nextLine().equalsIgnoreCase("y");
+
+                contract = new SalesContract(date, userName, userEmail, vehicleSold, finance);
+            }
+            /// Workbook stated user can't lease vehicle over 3 years old
+            else if (userSaleLease.equalsIgnoreCase("Lease")) {
+
+                int currentYear = LocalDate.now().getYear();
+                int vehicleAge = currentYear - sellLeaseV.getYear();
+
+                if (vehicleAge > 3) {
+                    System.out.println("\nSorry! We can't lease vehicles over 3 years old.\n");
+                    return;
                 }
+
+                contract = new LeaseContract(date, userName, userEmail, vehicleSold);
+
             }
             else {
-                continue;
+                System.out.println("Invalid choice. Please enter sale or lease.\n");
             }
+
+            ContractFileManager contractFM = new ContractFileManager();
+            contractFM.saveContract(contract);
+
+            /// Removes the vehicle from the inventory
+            dealership.removeVehicle(sellLeaseV);
+            DealershipFileManager dealershipFM = new DealershipFileManager();
+            dealershipFM.saveDealership(dealership);
+            System.out.println("Vehicle removed from inventory!\n");
+
+            System.out.println("CONTRACT SUMMARY");
+            System.out.println("Customer: " + userName + " | " + userEmail);
+            System.out.printf("Vehicle: %s | %s", sellLeaseV.getMake(), sellLeaseV.getModel());
+            System.out.printf("Total Price: $%,.2f", contract.getTotalPrice());
+            System.out.printf("Monthly Payment: $%,.2f", contract.getMonthlyPay());
+
+            break;
         }
     }
 }

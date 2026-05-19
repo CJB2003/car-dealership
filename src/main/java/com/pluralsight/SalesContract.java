@@ -7,10 +7,10 @@ public class SalesContract extends Contract{
     private double processingFee;
     private boolean finance;
 
-    /// Constructor
-    public SalesContract(String date, String customerName, String customerEmail, String vehicleSold,
-                         double salesTax, double recordingFee, double processingFee, boolean finance) {
+    /// Constructor, calculating inside of constructor so no need to pass them through
+    public SalesContract(String date, String customerName, String customerEmail, String vehicleSold, boolean finance) {
         super(date, customerName, customerEmail, vehicleSold);
+
         this.vehiclePrice = getVehiclePrice();
         this.salesTax = this.vehiclePrice * 0.05;
         this.recordingFee = 100;
@@ -19,7 +19,7 @@ public class SalesContract extends Contract{
     }
 
     /// Processing fee returns 295 if price is less than 10000 & 495 if greater
-    private double getProcessingFee() {
+    double getProcessingFee() {
         if (this.vehiclePrice < 10000) {
             return 295;
         } else {
@@ -33,6 +33,10 @@ public class SalesContract extends Contract{
      */
     @Override
     public double getMonthlyPay() {
+        if(!finance) {
+            return 0;
+        }
+
         double monthlyRate;
         int numberOfPayments;
 
@@ -51,12 +55,11 @@ public class SalesContract extends Contract{
 
     /**
      * Total price is calculated by vehicle price combined with vehicle price * sales tax
-     * plus recording and processing fees
+     * plus recording and processing fees. Fixed the calculation
      */
     @Override
     public double getTotalPrice() {
-        return this.vehiclePrice + (this.vehiclePrice * this.salesTax)
-                + this.recordingFee + getProcessingFee();
+        return this.vehiclePrice + salesTax + this.recordingFee + getProcessingFee();
     }
 
     /// Getters and setters
