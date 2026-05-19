@@ -19,6 +19,12 @@ public abstract class Contract {
 
     public abstract double getTotalPrice();
 
+    /// Parsing info from vehicleSold to get vehiclePrice which is the 7th index of the array
+    public double getVehiclePrice() {
+        String[] vParts = vehicleSold.split("\\|");
+        return Double.parseDouble(vParts[7]);
+    }
+
     public String getDate() {
         return date;
     }

@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -37,6 +38,7 @@ public class UserInterface {
                     7) All Vehicles
                     8) Add a Vehicle
                     9) Remove a Vehicle
+                    10) Sell/Lease a Vehicle
                     0) EXIT
                     """
             );
@@ -67,6 +69,7 @@ public class UserInterface {
                 case 7 -> processGetAllVehiclesRequest();
                 case 8 -> processAddVehicleRequest();
                 case 9 -> processRemoveVehicleRequest();
+                case 10 -> processSellLeaseVehicleRequest();
                 case 0 -> menuOpen = false;
                 default -> System.out.println("Invalid option. Try again.");
             }
@@ -202,7 +205,7 @@ public class UserInterface {
             }
 
             if (removeVehicle == null) {
-                System.out.println("\nVehicle VIN " + userVin + " could not be found within inventory. Try again");
+                System.out.println("\nVehicle VIN " + userVin + " could not be found within inventory. Try again.\n");
                 continue;
             }
 
@@ -225,6 +228,57 @@ public class UserInterface {
 
             System.out.println("Vehicle has been removed successfully!\n");
             break;
+        }
+    }
+
+    public void processSellLeaseVehicleRequest() {
+        System.out.print("Enter the VIN number of the vehicle: ");
+        int vin = Integer.parseInt(myScanner.nextLine());
+
+        while (true) {
+            Vehicle sellLeaseV = null;
+            for (Vehicle vehicle : dealership.getAllVehicles()) {
+                if (vehicle.getVin() == vin) {
+                    sellLeaseV = vehicle;
+                }
+            }
+
+            if (sellLeaseV == null) {
+                System.out.println("\nVehicle VIN " + vin + " could not be found within inventory. Try again.\n");
+                continue;
+            }
+
+            System.out.println("Vehicle found!");
+            System.out.printf("%d | %d | %s | %s | %s | %s | %d | %.2f%n\n", sellLeaseV.getVin(), sellLeaseV.getYear(), sellLeaseV.getMake(),
+                    sellLeaseV.getModel(), sellLeaseV.getVehicleType(), sellLeaseV.getColor(), sellLeaseV.getOdometer(), sellLeaseV.getPrice());
+
+            System.out.println("Is this the correct vehicle? (Y/N)");
+            String userChoice = myScanner.nextLine();
+
+            if (userChoice.equalsIgnoreCase("y")) {
+                String date = String.valueOf(LocalDate.now());
+
+                System.out.print("Please enter your name: ");
+                String userName = myScanner.nextLine();
+
+                System.out.print("Please enter your email: ");
+                String userEmail = myScanner.nextLine();
+
+                System.out.print("Will this be a sale or lease?");
+                String userSaleLease = myScanner.nextLine().toUpperCase();
+
+                Contract contract = null;
+
+                if (userSaleLease.equalsIgnoreCase("Sale")) {
+                    System.out.print("Would you like to finance? (Y/N): ");
+                    boolean finance = myScanner.nextLine().equalsIgnoreCase("y");
+
+
+                }
+            }
+            else {
+                continue;
+            }
         }
     }
 }
